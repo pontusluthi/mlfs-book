@@ -34,3 +34,12 @@ This project uses Hopsworks for feature groups and views as well as storing pred
 Data is retrieved from [Open-Meteo](https://open-meteo.com/) and [AQICN](https://aqicn.org/) for weather data, predictions and historical, and historical air quality data, respectively. 
 
 New predictions and hindcast graphs are generated once daily as defined per the air-quality-daily.yml instructions. The cron schedule defines when the workflow should run. 
+
+## Examples
+### Predictions graph
+![pred_aq](docs/air-quality/assets/img/pm25_forecast.png)
+
+### Hindcast graph
+![hindcast_aq](docs/air-quality/assets/img/pm25_hindcast_1day.png)
+
+There may be gaps in days in the hindcast graph if the script was not run the day before those. 
