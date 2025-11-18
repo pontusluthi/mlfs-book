@@ -1,30 +1,24 @@
-# mlfs-book
-O'Reilly book - Building Machine Learning Systems with a feature store: batch, real-time, and LLMs
+## Public URL
+[Dashbord for AQ monitoring at Stockholm Hornsgatan 108](https://pontusluthi.github.io/mlfs-book/air-quality/)
 
 
-## ML System Examples
+# Instructions to run notebooks. 
 
+## Install requirements
+### Install 'uv' and 'invoke'
+`pip install invoke dotenv`
 
-[Dashboards for Example ML Systems](https://featurestorebook.github.io/mlfs-book/)
+### 'Install packages' 
+`invoke install` to install python dependencies using uv and requirements.txt. 
 
+### Numpy
+You may need to downgrade to `numpy<2` e.g. `numpy==1.26.4`, if some imports fail. 
 
+### API keys
+You will need to define `HOPSWORKS_API_KEY` and `AQICN_API_KEY` as environment variables. 
 
-
-# Run Air Quality Tutorial
-
-See [tutorial instructions here](https://docs.google.com/document/d/1YXfM1_rpo1-jM-lYyb1HpbV9EJPN6i1u6h2rhdPduNE/edit?usp=sharing)
-    # Create a conda or virtual environment for your project
-    conda create -n book 
-    conda activate book
-
-    # Install 'uv' and 'invoke'
-    pip install invoke dotenv
-
-    # 'invoke install' installs python dependencies using uv and requirements.txt
-    invoke install
-
-
-## PyInvoke
+## Running with PyInvoke
+To run the scripts you can use the below invoke commands.
 
     invoke aq-backfill
     invoke aq-features
@@ -33,17 +27,10 @@ See [tutorial instructions here](https://docs.google.com/document/d/1YXfM1_rpo1-
     invoke aq-clean
 
 
+# Project description
+This project uses Hopsworks for feature groups and views as well as storing predictions models. 
 
-## Feldera
+## Data
+Data is retrieved from [Open-Meteo](https://open-meteo.com/) and [AQICN](https://aqicn.org/) for weather data, predictions and historical, and historical air quality data, respectively. 
 
-
-pip install feldera ipython-secrets
-sudo apt-get install python3-secretstorage
-sudo apt-get install gnome-keyring 
-
-mkdir -p /tmp/c.app.hopsworks.ai
-ln -s  /tmp/c.app.hopsworks.ai ~/hopsworks
-docker run -p 8080:8080 \
-  -v ~/hopsworks:/tmp/c.app.hopsworks.ai \
-  --tty --rm -it ghcr.io/feldera/pipeline-manager:latest
-
+New predictions and hindcast graphs are generated once daily as defined per the air-quality-daily.yml instructions. The cron schedule defines when the workflow should run. 
